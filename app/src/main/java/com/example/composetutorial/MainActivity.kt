@@ -48,7 +48,6 @@ data class Message(val author: String, val body: String)
 fun MessageCard(msg: Message) {
     Row(
         modifier = Modifier
-            .fillMaxSize(0.5f)
             .border(width = 2.dp, color = MaterialTheme.colorScheme.primary, shape = RectangleShape)
             .padding(all = 12.dp)
             .background(color = MaterialTheme.colorScheme.inversePrimary, shape = RoundedCornerShape(12.dp))

@@ -27,7 +27,9 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.composetutorial.ui.theme.ComposeTutorialTheme
+import android.content.res.Configuration
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -62,9 +64,9 @@ fun MessageCard(msg: Message) {
                 .border(1.5.dp, MaterialTheme.colorScheme.secondary, CircleShape)
         )
 
-        Spacer(modifier = Modifier.width(8.dp))
+        Spacer(modifier = Modifier.width(12.dp))
 
-        Column() {
+        Column {
             Text(
                 text = msg.author,
                 color = MaterialTheme.colorScheme.secondary,
@@ -73,19 +75,24 @@ fun MessageCard(msg: Message) {
 
             Spacer(modifier = Modifier.height(4.dp))
 
-            Surface(shape = MaterialTheme.shapes.medium, shadowElevation = 1.dp) {
+            Surface(shape = RoundedCornerShape(8.dp), shadowElevation = 1.dp) {
                 Text(
+                    modifier = Modifier.padding(vertical = 6.dp, horizontal = 12.dp),
                     text = msg.body,
                     color = MaterialTheme.colorScheme.primary,
                     style = MaterialTheme.typography.bodySmall,
-                    modifier = Modifier.padding(vertical = 4.dp, horizontal = 8.dp)
+                    fontSize = 16.sp
                 )
             }
         }
     }
 }
 
-@Preview
+@Preview(
+    uiMode = Configuration.UI_MODE_NIGHT_YES,
+    showBackground = true,
+    name = "night"
+)
 @Composable
 fun previewMessageCard() {
     ComposeTutorialTheme() {

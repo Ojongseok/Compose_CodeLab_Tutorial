@@ -3,6 +3,7 @@ package com.example.composetutorial
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -47,18 +48,19 @@ fun Myapp(modifier: Modifier = Modifier) {
     if (shouldShowOnboarding) {
         OnboardingScreen(onContinueClicked = { shouldShowOnboarding = false })
     } else {
-        Greetings()
+        Greetings(onclickListener = {shouldShowOnboarding = true})
     }
 }
 
 @Composable
 private fun Greetings(
     modifier: Modifier = Modifier,
-    names: List<String> = listOf("World", "Compose")
+    names: List<String> = listOf("World", "Compose"),
+    onclickListener: () -> Unit
 ) {
     Column(modifier = modifier.padding(vertical = 4.dp)) {
         for (name in names) {
-            Greeting(name = name)
+            Greeting(name = name, onclickListener)
         }
     }
 }
@@ -90,10 +92,10 @@ fun OnboardingScreen(
 }
 
 @Composable
-private fun Greeting(name: String) {
-    val expanded = remember { mutableStateOf(false) }
+private fun Greeting(name: String, onclickListener: () -> Unit) {
+    var expanded by remember { mutableStateOf(false) }
 
-    val extraPadding = if (expanded.value) 48.dp else 0.dp
+    val extraPadding = if (expanded) 48.dp else 0.dp
 
     Surface(
         color = MaterialTheme.colorScheme.primary,
@@ -104,13 +106,16 @@ private fun Greeting(name: String) {
                 .weight(1f)
                 .padding(bottom = extraPadding)
             ) {
-                Text(text = "Hello, ")
-                Text(text = name)
+                Text(text = "Hello, ", modifier = Modifier.clickable(onClick = onclickListener))
+                Text(
+                    modifier = Modifier.clickable(onClick = onclickListener),
+                    text = name
+                )
             }
             ElevatedButton(
-                onClick = { expanded.value = !expanded.value }
+                onClick = { expanded = !expanded }
             ) {
-                Text(if (expanded.value) "Show less" else "Show more")
+                Text(if (expanded) "Show less" else "Show more")
             }
         }
     }

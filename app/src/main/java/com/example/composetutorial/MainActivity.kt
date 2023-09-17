@@ -1,5 +1,7 @@
 package com.example.composetutorial
 
+import android.content.res.Configuration.UI_MODE_NIGHT_NO
+import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -92,7 +94,9 @@ fun OnboardingScreen(
             Text(
                 text = "계속하기",
                 fontSize = 18.sp,
-                fontWeight = FontWeight.ExtraBold
+                style = MaterialTheme.typography.headlineMedium.copy(
+                    fontWeight = FontWeight.ExtraBold
+                )
             )
         }
         Text(text = "더보기")
@@ -136,6 +140,11 @@ private fun Greeting(name: String, onclickListener: () -> Unit) {
     }
 }
 
+@Preview(
+    showBackground = true,
+    uiMode = UI_MODE_NIGHT_YES,
+    name = "Dark"
+)
 @Preview(showBackground = true)
 @Composable
 fun OnboardingPreview() {

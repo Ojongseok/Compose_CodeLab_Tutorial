@@ -10,21 +10,34 @@ import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 
+
+val Navy = Color(0xFF073042)
+val Blue = Color(0xFF4285F4)
+val LightBlue = Color(0xFFD7EFFE)
+val Chartreuse = Color(0xFFEFF7CF)
+
 private val DarkColorScheme = darkColorScheme(
-    primary = Purple80,
+    primary = Navy,
     secondary = PurpleGrey80,
-    tertiary = Pink80
+    tertiary = Pink80,
+    surface = Blue,
+    onSurface = Navy,
+    onPrimary = Chartreuse
 )
 
 private val LightColorScheme = lightColorScheme(
-    primary = Purple40,
+    primary = LightBlue,
     secondary = PurpleGrey40,
-    tertiary = Pink40
+    tertiary = Pink40,
+    surface = Blue,
+    onSurface = Color.White,
+    onPrimary = Navy
 
     /* Other default colors to override
     background = Color(0xFFFFFBFE),
@@ -36,6 +49,7 @@ private val LightColorScheme = lightColorScheme(
     onSurface = Color(0xFF1C1B1F),
     */
 )
+
 
 @Composable
 fun ComposeTutorialTheme(
@@ -53,6 +67,7 @@ fun ComposeTutorialTheme(
         darkTheme -> DarkColorScheme
         else -> LightColorScheme
     }
+
     val view = LocalView.current
     if (!view.isInEditMode) {
         SideEffect {

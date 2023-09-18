@@ -63,6 +63,7 @@ import androidx.compose.ui.unit.sp
 import com.example.composetutorial.ui.theme.ComposeTutorialTheme
 
 class MainActivity : ComponentActivity() {
+    @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -72,7 +73,7 @@ class MainActivity : ComponentActivity() {
                     bottomBar = { SootheBottomNavigation() },
                     modifier = Modifier.fillMaxSize()
                 ) {
-                    HomeScreen(Modifier.padding(it))
+                    HomeScreen(Modifier)
                 }
 
             }
@@ -80,6 +81,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Preview(showBackground = true, backgroundColor = 0xFFF5F0EE)
 @Composable
 fun OnboardingPreview() {
@@ -89,7 +91,7 @@ fun OnboardingPreview() {
                 bottomBar = { SootheBottomNavigation() },
                 modifier = Modifier.fillMaxSize()
             ) {
-                HomeScreen(Modifier.padding(it))
+                HomeScreen(Modifier)
             }
 
         }

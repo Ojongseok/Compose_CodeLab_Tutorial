@@ -28,8 +28,10 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Icon
@@ -59,7 +61,7 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             ComposeTutorialTheme {
-                FavoriteCollectionCard()
+                HomeScreen()
             }
         }
     }
@@ -215,14 +217,34 @@ fun HomeSection(
     }
 }
 
-@Preview(showBackground = true, backgroundColor = 0xFFF5F0EE)
+@Composable
+fun HomeScreen(
+    modifier: Modifier = Modifier
+) {
+    Column(
+        modifier =modifier.verticalScroll(rememberScrollState())
+    ) {
+        Spacer(modifier = modifier.height(16.dp))
+        SearchBar(Modifier.padding(horizontal = 16.dp))
+        HomeSection(title = R.string.image_string) {
+            AlignYourBodyRow()
+        }
+        HomeSection(title = R.string.image_string) {
+            FavoriteCollectionCard()
+        }
+        Spacer(Modifier.height(16.dp))
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFF5F0EE, heightDp = 180)
 @Composable
 fun OnboardingPreview() {
     ComposeTutorialTheme {
-        HomeSection(
-            title = R.string.image_string,
-            content = { AlignYourBodyRow() }
-        )
+//        HomeSection(
+//            title = R.string.image_string,
+//            content = { AlignYourBodyRow() }
+//        )
+        HomeScreen()
     }
 }
 

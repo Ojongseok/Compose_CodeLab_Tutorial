@@ -88,7 +88,7 @@ fun OnboardingPreview() {
     ComposeTutorialTheme {
         ComposeTutorialTheme {
             Scaffold(
-                bottomBar = { SootheBottomNavigation() },
+                bottomBar ={ SootheBottomNavigation() },
                 modifier = Modifier.fillMaxSize()
             ) {
                 HomeScreen(Modifier)

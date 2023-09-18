@@ -1,5 +1,6 @@
 package com.example.composetutorial
 
+import android.annotation.SuppressLint
 import android.graphics.drawable.shapes.Shape
 import android.os.Bundle
 import android.widget.Space
@@ -14,6 +15,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -33,9 +35,14 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Spa
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Shapes
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -61,8 +68,30 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             ComposeTutorialTheme {
-                HomeScreen()
+                Scaffold(
+                    bottomBar = { SootheBottomNavigation() },
+                    modifier = Modifier.fillMaxSize()
+                ) {
+                    HomeScreen(Modifier.padding(it))
+                }
+
             }
+        }
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFF5F0EE)
+@Composable
+fun OnboardingPreview() {
+    ComposeTutorialTheme {
+        ComposeTutorialTheme {
+            Scaffold(
+                bottomBar = { SootheBottomNavigation() },
+                modifier = Modifier.fillMaxSize()
+            ) {
+                HomeScreen(Modifier.padding(it))
+            }
+
         }
     }
 }
@@ -222,7 +251,7 @@ fun HomeScreen(
     modifier: Modifier = Modifier
 ) {
     Column(
-        modifier =modifier.verticalScroll(rememberScrollState())
+        modifier = modifier.verticalScroll(rememberScrollState()).fillMaxHeight(),
     ) {
         Spacer(modifier = modifier.height(16.dp))
         SearchBar(Modifier.padding(horizontal = 16.dp))
@@ -236,30 +265,43 @@ fun HomeScreen(
     }
 }
 
-@Preview(showBackground = true, backgroundColor = 0xFFF5F0EE, heightDp = 180)
 @Composable
-fun OnboardingPreview() {
-    ComposeTutorialTheme {
-//        HomeSection(
-//            title = R.string.image_string,
-//            content = { AlignYourBodyRow() }
-//        )
-        HomeScreen()
+fun SootheBottomNavigation(
+    modifier: Modifier = Modifier
+) {
+    NavigationBar(
+        modifier = modifier,
+        containerColor = MaterialTheme.colorScheme.surfaceVariant
+    ) {
+        NavigationBarItem(
+            icon = {
+                Icon(
+                    imageVector = Icons.Default.Spa,
+                    contentDescription = null
+                )
+            },
+            label = {
+                Text(
+                    text = stringResource(R.string.bottom_navigation_home)
+                )
+            },
+            selected = true,
+            onClick = {}
+        )
+        NavigationBarItem(
+            icon = {
+                Icon(
+                    imageVector = Icons.Default.AccountCircle,
+                    contentDescription = null
+                )
+            },
+            label = {
+                Text(
+                    text = stringResource(R.string.bottom_navigation_profile)
+                )
+            },
+            selected = true,
+            onClick = {}
+        )
     }
 }
-
-//@Preview(showBackground = true, backgroundColor = 0xFFF5F0EE)
-//@Composable
-//fun OnboardingPreview2() {
-//    ComposeTutorialTheme {
-//        SearchBar()
-//    }
-//}
-//
-//@Preview(showBackground = true, backgroundColor = 0xFFF5F0EE)
-//@Composable
-//fun OnboardingPreview3() {
-//    ComposeTutorialTheme {
-//        AlignYourBodyElement()
-//    }
-//}

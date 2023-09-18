@@ -5,4 +5,7 @@
     <string name="show_more">Show more</string>
     <string name="placeholder_search">Search</string>
     <string name="image_string">description</string>
+
+    <string name="bottom_navigation_home">홈</string>
+    <string name="bottom_navigation_profile">프로필</string>
 </resources>

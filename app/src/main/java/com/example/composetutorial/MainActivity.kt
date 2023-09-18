@@ -22,7 +22,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.paddingFromBaseline
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -55,7 +59,7 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             ComposeTutorialTheme {
-                AlignYourBodyRow()
+                FavoriteCollectionCard()
             }
         }
     }
@@ -125,7 +129,7 @@ fun FavoriteCollectionCard(
     Surface(
         shape = RoundedCornerShape(8.dp),
         color = MaterialTheme.colorScheme.surfaceVariant,
-        modifier = modifier
+        modifier = modifier.wrapContentHeight()
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
@@ -169,11 +173,56 @@ fun AlignYourBodyRow(
     }
 }
 
+@Composable
+fun FavoriteCollectionCard(
+    modifier: Modifier = Modifier
+) {
+    val favoriteCollectionsData = mutableListOf<AlignYourBodyData>()
+    favoriteCollectionsData.add(AlignYourBodyData(R.drawable.sameple_image2, R.string.image_string))
+    favoriteCollectionsData.add(AlignYourBodyData(R.drawable.sameple_image2, R.string.image_string))
+    favoriteCollectionsData.add(AlignYourBodyData(R.drawable.sample_image, R.string.image_string))
+    favoriteCollectionsData.add(AlignYourBodyData(R.drawable.sameple_image2, R.string.image_string))
+    favoriteCollectionsData.add(AlignYourBodyData(R.drawable.sample_image, R.string.image_string))
+
+    LazyHorizontalGrid(
+        rows = GridCells.Fixed(2),
+        modifier = modifier.height(168.dp),
+        contentPadding = PaddingValues(horizontal = 16.dp),
+        horizontalArrangement = Arrangement.spacedBy(16.dp),
+        verticalArrangement = Arrangement.spacedBy(16.dp),
+    ) {
+        items(favoriteCollectionsData) {
+            FavoriteCollectionCard(it.drawable, it.text)
+        }
+    }
+}
+
+@Composable
+fun HomeSection(
+    @StringRes title: Int,
+    modifier: Modifier = Modifier,
+    content: @Composable () -> Unit
+) {
+    Column(modifier) {
+        Text(
+            text = stringResource(title),
+            style = MaterialTheme.typography.titleMedium,
+            modifier = modifier
+                .paddingFromBaseline(top = 40.dp, bottom = 16.dp)
+                .padding(horizontal = 16.dp)
+        )
+        content()
+    }
+}
+
 @Preview(showBackground = true, backgroundColor = 0xFFF5F0EE)
 @Composable
 fun OnboardingPreview() {
     ComposeTutorialTheme {
-        AlignYourBodyRow()
+        HomeSection(
+            title = R.string.image_string,
+            content = { AlignYourBodyRow() }
+        )
     }
 }
 

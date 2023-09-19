@@ -63,247 +63,26 @@ import androidx.compose.ui.unit.sp
 import com.example.composetutorial.ui.theme.ComposeTutorialTheme
 
 class MainActivity : ComponentActivity() {
-    @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContent {
             ComposeTutorialTheme {
-                Scaffold(
-                    bottomBar = { SootheBottomNavigation() },
-                    modifier = Modifier.fillMaxSize()
+                Surface(
+                    modifier = Modifier.fillMaxSize(),
+                    color = MaterialTheme.colorScheme.background
                 ) {
-                    HomeScreen(Modifier)
+                    WellnessScreen()
                 }
-
             }
         }
     }
 }
 
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
-@Preview(showBackground = true, backgroundColor = 0xFFF5F0EE)
+@Preview(showBackground = true)
 @Composable
 fun OnboardingPreview() {
     ComposeTutorialTheme {
-        ComposeTutorialTheme {
-            Scaffold(
-                bottomBar ={ SootheBottomNavigation() },
-                modifier = Modifier.fillMaxSize()
-            ) {
-                HomeScreen(Modifier)
-            }
-
-        }
-    }
-}
-
-@Composable
-fun SearchBar(modifier: Modifier = Modifier) {
-    TextField(
-        modifier = modifier
-            .fillMaxWidth()
-            .heightIn(min = 56.dp)
-            .padding(all = 8.dp),
-        value = "",
-        onValueChange = {},
-        leadingIcon = {
-            Icon(
-                imageVector = Icons.Default.Search,
-                contentDescription = null
-            )
-        },
-        colors = TextFieldDefaults.colors(
-            unfocusedContainerColor = MaterialTheme.colorScheme.surface,
-            focusedContainerColor = MaterialTheme.colorScheme.onSurface
-        ),
-        placeholder = {
-            Text(stringResource(R.string.placeholder_search))
-        }
-    )
-}
-
-@Composable
-fun AlignYourBodyElement(
-    @DrawableRes drawable: Int,
-    @StringRes text: Int,
-    modifier: Modifier = Modifier
-) {
-    Column(
-        modifier = modifier
-            .fillMaxWidth(),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Image(
-            painter = painterResource(drawable),
-            contentDescription = null,
-            contentScale = ContentScale.Crop,
-            modifier = modifier
-                .size(88.dp)
-                .clip(CircleShape)
-        )
-        Text(
-            modifier = modifier
-                .padding(top = 24.dp, bottom = 8.dp)
-                .background(color = Color.Blue, shape = RoundedCornerShape(8.dp))
-                .padding(all = 4.dp),
-            text = stringResource(text),
-            color = Color.White
-        )
-    }
-}
-
-@Composable
-fun FavoriteCollectionCard(
-    @DrawableRes drawable: Int,
-    @StringRes text: Int,
-    modifier: Modifier = Modifier
-) {
-    Surface(
-        shape = RoundedCornerShape(8.dp),
-        color = MaterialTheme.colorScheme.surfaceVariant,
-        modifier = modifier.wrapContentHeight()
-    ) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.width(255.dp)
-        ) {
-            Image(
-                painter = painterResource(drawable),
-                contentDescription = null,
-                contentScale = ContentScale.Crop,
-                modifier = Modifier.size(80.dp)
-            )
-            Text(
-                style = MaterialTheme.typography.titleMedium,
-                modifier = Modifier.padding(horizontal = 16.dp),
-                text = stringResource(text),
-                fontSize = 12.sp
-            )
-        }
-    }
-}
-
-@Composable
-fun AlignYourBodyRow(
-    modifier: Modifier = Modifier
-) {
-    val alignYourBodyData = mutableListOf<AlignYourBodyData>()
-    alignYourBodyData.add(AlignYourBodyData(R.drawable.sameple_image2, R.string.image_string))
-    alignYourBodyData.add(AlignYourBodyData(R.drawable.sameple_image2, R.string.image_string))
-    alignYourBodyData.add(AlignYourBodyData(R.drawable.sample_image, R.string.image_string))
-    alignYourBodyData.add(AlignYourBodyData(R.drawable.sameple_image2, R.string.image_string))
-    alignYourBodyData.add(AlignYourBodyData(R.drawable.sample_image, R.string.image_string))
-
-    LazyRow(
-        modifier = modifier,
-        horizontalArrangement = Arrangement.spacedBy(8.dp),
-        contentPadding = PaddingValues(horizontal = 16.dp, vertical = 4.dp)
-    ) {
-        items(alignYourBodyData) {
-            AlignYourBodyElement(it.drawable, it.text)
-        }
-    }
-}
-
-@Composable
-fun FavoriteCollectionCard(
-    modifier: Modifier = Modifier
-) {
-    val favoriteCollectionsData = mutableListOf<AlignYourBodyData>()
-    favoriteCollectionsData.add(AlignYourBodyData(R.drawable.sameple_image2, R.string.image_string))
-    favoriteCollectionsData.add(AlignYourBodyData(R.drawable.sameple_image2, R.string.image_string))
-    favoriteCollectionsData.add(AlignYourBodyData(R.drawable.sample_image, R.string.image_string))
-    favoriteCollectionsData.add(AlignYourBodyData(R.drawable.sameple_image2, R.string.image_string))
-    favoriteCollectionsData.add(AlignYourBodyData(R.drawable.sample_image, R.string.image_string))
-
-    LazyHorizontalGrid(
-        rows = GridCells.Fixed(2),
-        modifier = modifier.height(168.dp),
-        contentPadding = PaddingValues(horizontal = 16.dp),
-        horizontalArrangement = Arrangement.spacedBy(16.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp),
-    ) {
-        items(favoriteCollectionsData) {
-            FavoriteCollectionCard(it.drawable, it.text)
-        }
-    }
-}
-
-@Composable
-fun HomeSection(
-    @StringRes title: Int,
-    modifier: Modifier = Modifier,
-    content: @Composable () -> Unit
-) {
-    Column(modifier) {
-        Text(
-            text = stringResource(title),
-            style = MaterialTheme.typography.titleMedium,
-            modifier = modifier
-                .paddingFromBaseline(top = 40.dp, bottom = 16.dp)
-                .padding(horizontal = 16.dp)
-        )
-        content()
-    }
-}
-
-@Composable
-fun HomeScreen(
-    modifier: Modifier = Modifier
-) {
-    Column(
-        modifier = modifier.verticalScroll(rememberScrollState()).fillMaxHeight(),
-    ) {
-        Spacer(modifier = modifier.height(16.dp))
-        SearchBar(Modifier.padding(horizontal = 16.dp))
-        HomeSection(title = R.string.image_string) {
-            AlignYourBodyRow()
-        }
-        HomeSection(title = R.string.image_string) {
-            FavoriteCollectionCard()
-        }
-        Spacer(Modifier.height(16.dp))
-    }
-}
-
-@Composable
-fun SootheBottomNavigation(
-    modifier: Modifier = Modifier
-) {
-    NavigationBar(
-        modifier = modifier,
-        containerColor = MaterialTheme.colorScheme.surfaceVariant
-    ) {
-        NavigationBarItem(
-            icon = {
-                Icon(
-                    imageVector = Icons.Default.Spa,
-                    contentDescription = null
-                )
-            },
-            label = {
-                Text(
-                    text = stringResource(R.string.bottom_navigation_home)
-                )
-            },
-            selected = true,
-            onClick = {}
-        )
-        NavigationBarItem(
-            icon = {
-                Icon(
-                    imageVector = Icons.Default.AccountCircle,
-                    contentDescription = null
-                )
-            },
-            label = {
-                Text(
-                    text = stringResource(R.string.bottom_navigation_profile)
-                )
-            },
-            selected = true,
-            onClick = {}
-        )
+        WellnessScreen()
     }
 }
